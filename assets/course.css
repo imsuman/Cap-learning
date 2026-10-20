@@ -1,0 +1,26 @@
+:root{--bg:#fffdf8;--fg:#1d1d1b;--muted:#6b6a64;--rule:#d9d5c8;--accent:#0a6e5c;--code-bg:#f4f1e6;--ok:#157347;--bad:#b02a37}
+@media (prefers-color-scheme:dark){:root{--bg:#161614;--fg:#eceae1;--muted:#a09e94;--rule:#3a3935;--accent:#5fd0b6;--code-bg:#22221f;--ok:#6fcf97;--bad:#f08a8a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.6 Georgia,"Iowan Old Style",serif}
+main{max-width:42rem;margin:0 auto;padding:2.5rem 16px 5rem}
+h1{font-size:2rem;line-height:1.2;margin:.2em 0}
+h2{font-size:1.25rem;margin:2.2em 0 .4em;border-top:1px solid var(--rule);padding-top:1em}
+.kicker{color:var(--muted);font:.8rem/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.win{border-left:3px solid var(--accent);padding:.1em 1em;margin:1.2em 0;color:var(--muted)}
+code,pre{font:.85rem/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--code-bg)}
+code{padding:.1em .3em;border-radius:3px}
+pre{padding:.9em 1em;overflow-x:auto;border-radius:4px;border:1px solid var(--rule)}
+pre code{padding:0;background:none}
+a{color:var(--accent)}
+.cite{font:.75rem system-ui,sans-serif;vertical-align:super}
+.task{background:var(--code-bg);border:1px solid var(--rule);border-radius:4px;padding:.2em 1.1em;margin:1em 0}
+.q{margin:1.6em 0}
+.q p{margin:.2em 0 .5em;font-weight:bold}
+.q button{display:block;width:100%;text-align:left;margin:.3em 0;padding:.55em .8em;font:inherit;font-size:.95rem;background:var(--bg);color:var(--fg);border:1px solid var(--rule);border-radius:4px;cursor:pointer}
+.q button:hover:not(:disabled){border-color:var(--accent)}
+.q button.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--bg))}
+.q button.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,var(--bg))}
+.q .why{font:.85rem system-ui,sans-serif;color:var(--muted);margin:.4em 0 0;display:none}
+.q .why.show{display:block}
+.score{font:.9rem system-ui,sans-serif;color:var(--muted)}
+.ask{font:.9rem system-ui,sans-serif;color:var(--muted);border-top:1px solid var(--rule);margin-top:3em;padding-top:1em}

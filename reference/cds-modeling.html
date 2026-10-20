@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CDS Modeling Reference</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main>
+<div class="kicker">Reference</div>
+<h1>CDS modeling</h1>
+<h2>Skeleton</h2>
+<pre><code>using { cuid, managed } from '@sap/cds/common';
+namespace my.app;
+entity Things : cuid, managed {
+  name : String(100);
+}</code></pre>
+<h2>Terms</h2>
+<p><strong>Entity</strong>: named set of elements, becomes a table.<br>
+<strong>Element</strong>: a field with a type.<br>
+<strong>Aspect</strong>: reusable bundle of elements you mix in with <code>:</code>.<br>
+<strong><code>cuid</code></strong>: <code>key ID : UUID</code>, auto-filled.<br>
+<strong><code>managed</code></strong>: <code>createdAt</code>, <code>createdBy</code>, <code>modifiedAt</code>, <code>modifiedBy</code>.<br>
+<strong>Namespace</strong>: name prefix; dots become underscores in SQL.</p>
+<h2>Built-in types</h2>
+<p>UUID, Boolean, Date, Time, DateTime, Timestamp, Integer, UInt8, Int16, Int32, Int64, Double, Decimal, String, LargeString, Binary, LargeBinary.</p>
+<h2>Commands</h2>
+<pre><code>cds init &lt;name&gt;
+cds compile db/schema.cds --to sql
+cds watch</code></pre>
+<p class="score">Sources: <a href="https://cap.cloud.sap/docs/guides/domain">Domain Modeling</a>, <a href="https://cap.cloud.sap/docs/cds/common">Common Types and Aspects</a>. Updated as lessons add material.</p>
+</main></body></html>

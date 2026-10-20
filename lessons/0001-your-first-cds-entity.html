@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your First CDS Entity</title><link rel="stylesheet" href="../assets/course.css"></head>
+<body><main>
+<div class="kicker">CDS Modeling · Lesson 1</div>
+<h1>Your first CDS entity</h1>
+<div class="win"><strong>Win:</strong> you write one entity in CDS, predict the SQL table the compiler will produce, then check your prediction against the real compiler.</div>
+
+<h2>The idea</h2>
+<p>CDS is CAP's modeling language. You describe <em>what</em> your domain looks like, not <em>how</em> to store it, and CAP provides generic implementations from that model.<a class="cite" href="https://cap.cloud.sap/docs/guides/domain">[1]</a> The model is the source of truth; the SQL table is a by-product.</p>
+
+<h2>Four things to know</h2>
+<p><strong>1. An entity</strong> is a named set of elements (fields), each with a built-in type such as <code>String</code>, <code>Date</code>, <code>Boolean</code>, <code>Integer</code> or <code>UUID</code>.<a class="cite" href="https://cap.cloud.sap/docs/guides/domain">[1]</a></p>
+<p><strong>2. <code>cuid</code></strong> is a reusable aspect from <code>@sap/cds/common</code>. It is shorthand for <code>key ID : UUID</code>, and the runtime fills in the UUID for you.<a class="cite" href="https://cap.cloud.sap/docs/cds/common">[2]</a></p>
+<p><strong>3. <code>managed</code></strong> adds four elements: <code>createdAt</code>, <code>createdBy</code>, <code>modifiedAt</code>, <code>modifiedBy</code>, filled automatically on insert and update.<a class="cite" href="https://cap.cloud.sap/docs/cds/common">[2]</a></p>
+<p><strong>4. A namespace</strong> prefixes your entity names. In the generated SQL the dots become underscores (verified below on the real compiler).</p>
+
+<pre><code>using { cuid, managed } from '@sap/cds/common';
+namespace sap.learning.onboarding;
+
+entity SupplierRequests : cuid, managed {
+  name        : String(100);
+  country     : String(2);
+  requestedAt : Date;
+  approved    : Boolean default false;
+}</code></pre>
+
+<h2>Your task (about 10 minutes)</h2>
+<div class="task">
+<p><strong>Before you run anything</strong>, take a piece of paper and write down: (a) the name of the SQL table, (b) every column. Don't scroll up. Retrieval from memory is what makes this stick.</p>
+<p>Then, in a terminal:</p>
+<pre><code>npm i -g @sap/cds-dk
+cds init supplier-onboarding
+cd supplier-onboarding</code></pre>
+<p>Create <code>db/schema.cds</code> and <strong>type the entity above yourself</strong> (don't paste). Then compile it:</p>
+<pre><code>cds compile db/schema.cds --to sql</code></pre>
+<p>Compare with your paper. Every column you missed or mis-named is the useful part. Then change one thing (add an <code>Integer</code> element, rename the namespace) and predict the new SQL before compiling again.</p>
+</div>
+<p><strong>Runnable check:</strong> the compiler prints one <code>CREATE TABLE</code> statement and no errors, and your prediction matched it. Be ready to explain to your teacher where each column came from: your elements, <code>cuid</code>, or <code>managed</code>.</p>
+
+<h2>Quick check</h2>
+<div class="q" data-answer="2"><p>What does <code>cuid</code> add to an entity?</p>
+<button>A string primary key called ID</button><button>A UUID primary key called ID</button><button>An integer primary key called ID</button><button>A hashed primary key called ID</button>
+<p class="why"><code>cuid</code> is <code>key ID : UUID</code>, per the common aspects reference <a href="https://cap.cloud.sap/docs/cds/common">[2]</a>.</p></div>
+
+<div class="q" data-answer="4"><p>Which elements does <code>managed</code> add?</p>
+<button>createdAt, createdBy, deletedAt, deletedBy</button><button>createdOn, changedOn, owner, approver</button><button>createdAt, modifiedAt, version, etag</button><button>createdAt, createdBy, modifiedAt, modifiedBy</button>
+<p class="why">Four elements: who and when it was created, who and when it was last modified <a href="https://cap.cloud.sap/docs/cds/common">[2]</a>.</p></div>
+
+<div class="q" data-answer="1"><p>With <code>namespace sap.learning.onboarding;</code> and <code>entity Foo</code>, what is the SQL table name?</p>
+<button>sap_learning_onboarding_Foo</button><button>sap.learning.onboarding.Foo</button><button>sap_learning_onboarding.Foo</button><button>Foo_sap_learning_onboarding</button>
+<p class="why">The compiler joins namespace and name with underscores. You saw this on the real compiler for <code>SupplierRequests</code>.</p></div>
+
+<div class="q" data-answer="3"><p>Where do you write the <code>CREATE TABLE</code> statement for your entity?</p>
+<button>In srv/ beside the service definition</button><button>In a migration script you maintain</button><button>Nowhere; the compiler generates it from CDS</button><button>In package.json under the cds key</button>
+<p class="why">CDS captures intent (what, not how); SQL is generated from the model <a href="https://cap.cloud.sap/docs/guides/domain">[1]</a>.</p></div>
+<p class="score" id="score"></p>
+
+<h2>Go further</h2>
+<p>Primary source: <a href="https://cap.cloud.sap/docs/guides/domain/index">capire: Domain Modeling</a>, the first two sections. Cheat sheet: <a href="../reference/cds-modeling.html">CDS modeling reference</a>. Next lesson: associations, linking a request to its line items.</p>
+
+<h2>Sources</h2>
+<p class="score">[1] <a href="https://cap.cloud.sap/docs/guides/domain">capire: Domain Modeling</a> · [2] <a href="https://cap.cloud.sap/docs/cds/common">capire: Common Types and Aspects</a></p>
+<p class="ask">Stuck, or something doesn't match your output? Ask your teacher in the chat. That is what they are for.</p>
+</main><script src="../assets/quiz.js"></script></body></html>
